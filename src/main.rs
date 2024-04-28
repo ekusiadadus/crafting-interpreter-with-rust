@@ -2,6 +2,7 @@ use std::env;
 use std::fs;
 use std::io::{self, BufRead, Write};
 use std::process;
+mod scanner;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -48,4 +49,12 @@ fn run(source: &str) -> io::Result<()> {
     // TODO: Implement interpreter logic here
     println!("Running: {}", source);
     Ok(())
+}
+
+fn error(line: usize, message: &str) {
+    report(line, "", message);
+}
+
+fn report(line: usize, localtion: &str, message: &str) {
+    eprintln!("[line {}] Error {}: {}", line, localtion, message);
 }
