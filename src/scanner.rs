@@ -130,6 +130,31 @@ impl Scanner {
 
     // TODO: implement scan_token
     fn scan_token(&mut self) {
+        let c = self.advance();
 
+        match c {
+           '(' => self.add_token(TokenType::LeftParen),
+           ')' => self.add_token(TokenType::RightParen),
+           '{' => self.add_token(TokenType::LeftBrace),
+           '}' => self.add_token(TokenType::RightBrace),
+           ',' => self.add_token(TokenType::Comma),
+           '.' => self.add_token(TokenType::Dot),
+           '-' => self.add_token(TokenType::Minus),
+           '+' => self.add_token(TokenType::Plus),
+           ';' => self.add_token(TokenType::Semicolon),
+           '*' => self.add_token(TokenType::Star),
+           _ => {}
+        }
+    }
+
+    fn advance(&mut self) -> char{
+        let c = self.source.chars().nth(self.current).unwrap();
+        self.current += 1;
+        c
+    }
+
+    fn add_token(&mut self, token_type:TokenType) {
+        let text = &self.source[self.start..self.current];
+        self.tokens.push(Token::new(token_type, text.to_string(), None, self.line));
     }
 }
