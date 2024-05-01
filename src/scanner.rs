@@ -97,7 +97,10 @@ impl Token {
 
 struct Scanner {
     source: String,
-    tokens: Vec<Token>
+    tokens: Vec<Token>,
+    start: usize,
+    current: usize,
+    line: usize
 }
 
 impl Scanner {
@@ -105,6 +108,28 @@ impl Scanner {
         Scanner{
             source,
             tokens: Vec::new(),
+            start: 0,
+            current: 0,
+            line: 1
         }
+    }
+
+    fn scan_tokens(&mut self) -> &Vec<Token> {
+        while !self.is_at_end() {
+            self.start = self.current;
+            self.scan_token();
+        }
+
+        self.tokens.push(Token::new(TokenType::Eof, String::new(), None, self.line));
+        &self.tokens
+    }
+
+    fn is_at_end(&self) -> bool {
+        self.current >= self.source.len()
+    }
+
+    // TODO: implement scan_token
+    fn scan_token(&mut self) {
+
     }
 }
