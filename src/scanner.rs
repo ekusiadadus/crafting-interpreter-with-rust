@@ -94,3 +94,17 @@ impl Token {
         }
     }
 }
+
+struct Scanner {
+    source: String,
+    tokens: Vec<Token>
+}
+
+impl Scanner {
+    fn new(source: String) -> Scanner{
+        Scanner{
+            source,
+            tokens: Vec::new(),
+        }
+    }
+}
